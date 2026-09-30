@@ -3,27 +3,19 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
-                bat 'cd frontend && npm install'
+                dir('flutter_app') {
+                    bat 'flutter pub get'
+                }
             }
         }
 
-        stage('Lint') {
+        stage('Test') {
             steps {
-                bat 'cd frontend && npm run lint'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'cd frontend && npm run build'
+                dir('flutter_app') {
+                    bat 'flutter test'
+                }
             }
         }
     }
