@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -14,7 +15,7 @@ pipeline {
             steps {
                 echo 'Installing backend dependencies...'
                 dir('backend') {
-                    sh 'npm ci'
+                    bat 'npm ci'
                 }
             }
         }
@@ -23,7 +24,7 @@ pipeline {
             steps {
                 echo 'Running backend tests...'
                 dir('backend') {
-                    sh 'npm test'
+                    bat 'npm test'
                 }
             }
         }
@@ -32,7 +33,7 @@ pipeline {
             steps {
                 echo 'Building backend...'
                 dir('backend') {
-                    sh 'npm run build --if-present'
+                    bat 'npm run build --if-present'
                 }
             }
         }
@@ -41,7 +42,7 @@ pipeline {
             steps {
                 echo 'Installing frontend dependencies...'
                 dir('frontend') {
-                    sh 'npm ci'
+                    bat 'npm ci'
                 }
             }
         }
@@ -50,7 +51,7 @@ pipeline {
             steps {
                 echo 'Running frontend tests...'
                 dir('frontend') {
-                    sh 'npm test'
+                    bat 'npm test'
                 }
             }
         }
@@ -59,7 +60,7 @@ pipeline {
             steps {
                 echo 'Building frontend...'
                 dir('frontend') {
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
@@ -85,3 +86,4 @@ pipeline {
         }
     }
 }
+```
