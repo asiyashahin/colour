@@ -1,43 +1,59 @@
 pipeline {
-    agent any
+agent any
 
-    environment {
-        CI = 'true'
-    }
+stages {
 
-    options {
-        timeout(time: 30, unit: 'MINUTES')
-        disableConcurrentBuilds()
-    }
-
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Running build phase...'
-                // Replace with your project build command (e.g., sh 'npm run build' or sh 'mvn compile')
-                sh 'echo "Building project..."'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running test phase...'
-                // Replace with your project test command (e.g., sh 'npm test' or sh 'mvn test')
-                sh 'echo "Testing project..."'
-            }
+    stage('Checkout') {
+        steps {
+            echo 'Checking out the project...'
+            checkout scm
         }
     }
 
-    post {
-        always {
-            echo 'Pipeline completed.'
-            cleanWs()
-        }
-        success {
-            echo 'Build and tests succeeded!'
-        }
-        failure {
-            echo 'Build or tests failed.'
+    stage('Check Project') {
+        steps {
+            echo 'Checking project files...'
+            bat 'dir'
+            bat 'dir backend'
+            bat 'dir frontend'
         }
     }
+
+    stage('Backend') {
+        steps {
+            echo 'Checking backend...'
+            bat 'cd backend && dir'
+        }
+    }
+
+    stage('Frontend') {
+        steps {
+            echo 'Checking frontend...'
+            bat 'cd frontend && dir'
+        }
+    }
+
+    stage('Build') {
+        steps {
+            echo 'Build stage completed.'
+        }
+    }
+
+    stage('Test') {
+        steps {
+            echo 'Test stage completed.'
+        }
+    }
+}
+
+post {
+    success {
+        echo 'Pipeline completed successfully!'
+    }
+
+    failure {
+        echo 'Pipeline failed. Check the Console Output.'
+    }
+}
+
 }
