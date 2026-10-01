@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Checking out NutriFlow source code...'
+               echo 'Checking out NutriFlow source code........................'
                 checkout scm
             }
         }
